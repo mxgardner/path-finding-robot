@@ -23,11 +23,18 @@ STRAIGHT_POSITION_KP = 4.0
 # Distance from axle midpoint to obstacle edge, including body and extra room.
 # With an approximately centered axle, half the body diagonal is 128.4 mm.
 # Round up to 140 mm for a margin during in-place turns; measure to confirm.
-CLEARANCE = 140.0
+CLEARANCE = 0.1
 
 # Floor size is always in tiles; tile size is always in millimeters.
 TILE = 305
-WIDTH, HEIGHT = 16, 5
+WIDTH, HEIGHT = 4, 16
+
+# for us: 
+# if you put yourself in the shoes of the robot,
+# width is how far ahead of you the map extends,
+# height is horizontal to you 
+# facing forward is up
+# (1,1) is the bottom left corner of the map, (16,4) is the top right corner of the map
 
 # Applies to START, GOAL and OBSTACLES only: "tiles" or "meters".
 # When using meters, enter ALL of those coordinates in meters.
@@ -36,12 +43,11 @@ COORDINATE_UNITS = "tiles"
 # Coordinates are measured from the bottom-left corner of the workspace.
 # Place the midpoint between the drive wheels at START.
 START = (1, 1)
-GOAL = (4, 3)
-START_HEADING = 0  # 0 = right, 90 = up, 180 = left, -90 = down.
+GOAL = (2, 4) 
+START_HEADING = 90 # 0 = right, 90 = up, 180 = left, -90 = down.
 
 # Obstacle CENTERS in the selected units. Replace with your assigned layout.
 OBSTACLES = [
-    (8, 3)
 ]
 
 # Meter examples (use with COORDINATE_UNITS = "meters"):

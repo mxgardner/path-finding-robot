@@ -83,13 +83,10 @@ def straight(left, right, distance):
         left_total = left.angle() - left_start
         right_total = right.angle() - right_start
 
-        brick.screen.clear()
-        brick.screen.print("Left:", round(left_total))
-        brick.screen.print("Right:", round(right_total))
-        brick.screen.print("Diff:", round(left_total - right_total))
-        brick.screen.print("Gyro:", gyro.angle() - target_heading)
+        # brick.screen.clear()
+        # brick.screen.print("Left:", round(left_total))
+        # brick.screen.print("Right:", round(right_total))
+        # brick.screen.print("Diff:", round(left_total - right_total))
+        # brick.screen.print("Gyro:", gyro.angle() - target_heading)
 
-        wait(15000)
-
-        # Give us time to read the values
-        wait(15000)
+        # wait(15000)
