@@ -15,8 +15,6 @@ SPEED = 50
 # Straight PID: encoder error in degrees, time in seconds, output in deg/s.
 # Starting gains; tune on the robot using test.py's straight test.
 STRAIGHT_KP = 2.0
-STRAIGHT_KI = 0.1
-STRAIGHT_KD = 0.05
 STRAIGHT_INTERVAL_MS = 20
 STRAIGHT_TOLERANCE_DEG = 2.0
 STRAIGHT_POSITION_KP = 4.0
@@ -38,7 +36,7 @@ COORDINATE_UNITS = "tiles"
 # Coordinates are measured from the bottom-left corner of the workspace.
 # Place the midpoint between the drive wheels at START.
 START = (1, 1)
-GOAL = (14, 3)
+GOAL = (4, 3)
 START_HEADING = 0  # 0 = right, 90 = up, 180 = left, -90 = down.
 
 # Obstacle CENTERS in the selected units. Replace with your assigned layout.
