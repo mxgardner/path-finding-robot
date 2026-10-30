@@ -2,14 +2,16 @@
 # Launch this file on the EV3 to run ONE movement test, then stop.
 # Use clear floor. For the directions test, lift the drive wheels first.
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor
+from pybricks.ev3devices import Motor, GyroSensor
+from pybricks.parameters import Port, Button
 from pybricks.tools import wait, StopWatch
 import config as cfg
 from straight_pid import straight
 
 # CHANGE THESE to choose the test and its inputs. Only the selected test's
 # settings are used. These distances are millimeters even in meter mode.
-TEST = "straight"  # "directions", "straight", "turn", or "square"
+TEST = "gyro"      # "gyro", "directions", "straight", "turn", or "square"
+GYRO_PORT = Port.S4  # Change this if your gyro is connected elsewhere.
 DISTANCE = 500     # straight: robot travel in mm; negative means backward.
 ANGLE = 90          # turn: ROBOT rotation in degrees; +left, -right.
 SQUARE_SIDE = 2 * cfg.TILE  # square: length of EACH side in mm (currently 610).
@@ -79,9 +81,25 @@ def test_square(left, right, side_mm, turn_deg=90):
         turn(left, right, turn_deg)
 
 
+def test_gyro(brick):
+    gyro = GyroSensor(GYRO_PORT)
+
+    # Run the test for 60 seconds
+    timer = StopWatch()
+
+    while timer.time() < 60000:
+        angle = gyro.angle()
+
+        brick.screen.clear()
+        brick.screen.print("GYRO TEST")
+        brick.screen.print("Angle:", angle)
+
+        wait(200)
+
+
 def main():
-    if TEST not in ("directions", "straight", "turn", "square"):
-        raise ValueError("TEST must be directions, straight, turn, or square")
+    if TEST not in ("gyro", "directions", "straight", "turn", "square"):
+        raise ValueError("TEST must be gyro, directions, straight, turn, or square")
     if any(not 0 < v < float("inf") for v in
            (cfg.WHEEL_DIAMETER, cfg.AXLE_TRACK, cfg.SPEED, cfg.TILE)):
         raise ValueError("Robot measurements and speed must be positive")
@@ -96,7 +114,9 @@ def main():
         wait(1000)
         # Pass the chosen test's inputs. The motor objects are automatic;
         # the numeric inputs come from the settings at the top of this file.
-        if TEST == "directions":
+        if TEST == "gyro":
+            test_gyro(brick)
+        elif TEST == "directions":
             test_directions(left, right, WHEEL_ROTATION)
         elif TEST == "straight":
             test_straight(left, right, DISTANCE)

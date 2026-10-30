@@ -7,7 +7,7 @@ from pybricks.parameters import Port
 from pybricks.tools import wait, StopWatch
 import config as cfg
 
-gyro = GyroSensor(Port.S2)
+gyro = GyroSensor(Port.S4)
 
 
 def straight(left, right, distance):
