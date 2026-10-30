@@ -10,9 +10,9 @@ from straight_pid import straight
 
 # CHANGE THESE to choose the test and its inputs. Only the selected test's
 # settings are used. These distances are millimeters even in meter mode.
-TEST = "gyro"      # "gyro", "directions", "straight", "turn", or "square"
+TEST = "straight"      # "gyro", "directions", "straight", "turn", or "square"
 GYRO_PORT = Port.S4  # Change this if your gyro is connected elsewhere.
-DISTANCE = 500     # straight: robot travel in mm; negative means backward.
+DISTANCE = 30000     # straight: robot travel in mm; negative means backward.
 ANGLE = 90          # turn: ROBOT rotation in degrees; +left, -right.
 SQUARE_SIDE = 2 * cfg.TILE  # square: length of EACH side in mm (currently 610).
 SQUARE_TURN = 90    # square: 90 for left turns, -90 for right turns.

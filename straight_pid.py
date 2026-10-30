@@ -21,7 +21,7 @@ def straight(left, right, distance):
     # Remember the direction we want to maintain
     target_heading = gyro.angle()
 
-    kp = 1.0  # Steering correction strength
+    kp = 0.5  # Steering correction strength
     speed = cfg.SPEED
 
     timer = StopWatch()
@@ -54,8 +54,8 @@ def straight(left, right, distance):
                              min(speed / 2, correction))
 
             # Adjust motor speeds
-            left_speed = base + correction
-            right_speed = base - correction
+            left_speed = base - correction
+            right_speed = base + correction
 
             left.run(max(-speed, min(speed, left_speed)))
             right.run(max(-speed, min(speed, right_speed)))
