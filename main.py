@@ -6,7 +6,7 @@ from pybricks.parameters import Button
 from pybricks.tools import wait, StopWatch
 # Robot measurements and the course layout are edited in config.py.
 import config as cfg
-from straight_pid import straight
+from straight import straight, gyro
 
 # START, GOAL and OBSTACLES may use tiles or meters. All distance calculations
 # below use millimeters, so they can be compared with the robot's clearance.
@@ -132,13 +132,68 @@ def move_wheels(left, right, left_angle, right_angle):
     wait(100)
 
 
+
 def turn(left, right, angle):
-    # angle is the ROBOT's turn in degrees. Each wheel follows a circle with
-    # radius AXLE_TRACK / 2, giving the wheel-rotation formula below.
-    wheel_angle = cfg.AXLE_TRACK * angle / cfg.WHEEL_DIAMETER
-    # Opposite rotations turn around the wheel midpoint. Positive angle turns
-    # left (counterclockwise): left wheel backward, right wheel forward.
-    move_wheels(left, right, -wheel_angle, wheel_angle)
+    # Gyro measures clockwise rotation as positive.
+    # Our map uses counterclockwise as positive.
+    # Therefore, subtract the requested angle.
+    target = gyro.angle() - angle
+
+    kp = 1.5
+    tolerance = 2
+    min_speed = 10
+    max_speed = cfg.SPEED
+
+    timer = StopWatch()
+    estimated_wheel_angle = (
+        cfg.AXLE_TRACK * abs(angle) / cfg.WHEEL_DIAMETER
+    )
+    timeout = (
+        3000 + 6000 * estimated_wheel_angle / max_speed
+    )
+
+    settled = 0
+
+    try:
+        while True:
+            current = gyro.angle()
+            error = target - current
+
+            # Require several readings within tolerance.
+            if abs(error) <= tolerance:
+                settled += 1
+                left.hold()
+                right.hold()
+
+                if settled >= 3:
+                    break
+            else:
+                settled = 0
+
+                # Proportional turning controller.
+                speed = kp * abs(error)
+                speed = max(min_speed, min(max_speed, speed))
+
+                # Negative gyro error means turn left.
+                # Positive gyro error means turn right.
+                if error < 0:
+                    left.run(-speed)
+                    right.run(speed)
+                else:
+                    left.run(speed)
+                    right.run(-speed)
+
+            if timer.time() > timeout:
+                raise RuntimeError("Gyro turn timed out")
+
+            wait(20)
+
+    finally:
+        left.hold()
+        right.hold()
+
+    wait(100)
+
 
 
 def main():

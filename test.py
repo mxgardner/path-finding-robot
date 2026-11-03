@@ -12,7 +12,7 @@ import config as cfg
 # TEST SETTINGS
 # -----------------------------------
 
-TEST = "straight"  # Options: "gyro", "gyro_turn", "directions",
+TEST = "gyro_turn"  # Options: "gyro", "gyro_turn", "directions",
 # Options: "gyro", "gyro_turn", "directions",
 #          "straight", "turn", "square"
 

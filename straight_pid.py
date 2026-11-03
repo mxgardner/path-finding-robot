@@ -1,6 +1,3 @@
-
-"""Simple gyro-based straight driving for EV3."""
-
 from math import pi
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import GyroSensor
@@ -16,7 +13,7 @@ def straight(left, right, distance):
     # Convert distance in mm to motor degrees
     target = distance * 360 / (pi * cfg.WHEEL_DIAMETER)
 
-    # Remember starting wheel positions
+    # Take note of starting wheel positions
     left_start = left.angle()
     right_start = right.angle()
 
